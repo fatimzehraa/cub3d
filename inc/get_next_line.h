@@ -6,7 +6,7 @@
 /*   By: fael-bou <fael-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 21:14:31 by fael-bou          #+#    #+#             */
-/*   Updated: 2023/02/18 14:26:30 by fael-bou         ###   ########.fr       */
+/*   Updated: 2023/02/19 21:33:59 by fael-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 # include<unistd.h>
 # include<stdlib.h>
-#define BUFFER_SIZE = 10
+#define BUFFER_SIZE = 100
 
 char	*get_next_line(int fd);
 size_t	ft_strlen(char *s);

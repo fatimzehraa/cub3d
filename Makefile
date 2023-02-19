@@ -10,10 +10,11 @@ endif
 LDFLAGS += -fsanitize=address
 
 BUILD_DIR = build
-HEADER_FILES = #h1.h
+HEADER_FILES = cub3D.h get_next_line.h list.h
 INCLUDES = $(addprefix inc/, $(HEADER_FILES))
-FILES = src/main.o
-OBG = $(addprefix $(BUILD_DIR)/, $(FILES))
+INC = -I inc -I/usr/local/include
+FILES = main.o lists/ft_lstadd_back.o lists/ft_lstadd_front.o lists/ft_lstclear.o lists/ft_lstdelone.o lists/ft_lstiter.o lists/ft_lstlast.o lists/ft_lstmap.o lists/ft_lstnew.o lists/ft_lstsize.o get_next_line/get_next_line.o get_next_line/get_next_line_utils.o
+OBG = $(addprefix $(BUILD_DIR)/src/, $(FILES))
 
 NAME = cub3D
 
@@ -22,14 +23,13 @@ all: $(NAME)
 $(NAME): $(OBG)
 	$(CC) $^ -o $@ $(LDFLAGS)
 
-#%.o: %.c $(INCLUDES)
-#	$(CC) $(CFLAGS) -c $< -o $@
-$(BUILD_DIR)/src/%.o: src/%.c $(HEADER_FILES)
+$(BUILD_DIR)/src/%.o: src/%.c $(INCLUDES)
 	mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
-	rm -rf *.o
+	rm -rf $(OBG)
+	rm -rf $(BUILD_DIR)
 
 fclean: clean
 	rm -rf $(NAME)

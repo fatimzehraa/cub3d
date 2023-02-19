@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <mlx.h>
+#include <get_next_line.h>
 
 int main()
 {
