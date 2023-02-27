@@ -29,6 +29,11 @@ t_list	*get_lines(int fd)
 	return (lines);
 }
 
+void	print_error(char *message)
+{
+	write(2, message, ft_strlen(message));
+}
+
 t_list	*parse(char *filename, t_map *map)
 {
 	t_list	*lines;
