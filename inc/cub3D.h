@@ -4,7 +4,7 @@
 #include "list.h"
 #include "get_next_line.h"
 #include <stdbool.h>
-#define SQUARE_SIZE 64
+#define SIDE_SQUARE 64
 
 typedef struct s_map
 {
@@ -22,7 +22,11 @@ typedef struct s_ctx
 {
 	void	*mlx;
 	void	*win;
-	t_map	*map;
+	t_map	map;
 }	t_ctx;
+
+int	args_err(int argc, char *argv[]);
+t_list	*parse(char *filename, t_map *map);
+void	print_error(char *message);
 
 #endif

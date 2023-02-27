@@ -53,9 +53,9 @@ t_list	*parse(char *filename, t_map *map)
 		return (NULL);
 	}
 	map->lines = lines;
-	if (check_map(map))
-		return (lines);
-	print_error("the map is invalid");
+	//if (check_map(map))
+	//	return (lines);
+	//print_error("the map is invalid");
 	ft_lstclear(&lines, free);
 	return (NULL);
 }
