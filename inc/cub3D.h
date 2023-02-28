@@ -8,6 +8,7 @@
 
 typedef struct s_map
 {
+	t_list	*header;
 	int		width;
 	int		height;
 	char	*north;
@@ -27,6 +28,9 @@ typedef struct s_ctx
 
 int	args_err(int argc, char *argv[]);
 t_list	*parse(char *filename, t_map *map);
+int check_dup(t_map *map);
+int map_began(t_list *lines);
+int	check_header(t_map **map);
 void	print_error(char *message);
 
 #endif

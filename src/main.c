@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <unistd.h>
 #include <mlx.h>
 #include <get_next_line.h>
@@ -58,7 +59,8 @@ int	main(int argc, char *argv[])
 	init_ctx(&ctx);
 	lines = parse(argv[1], &ctx.map);
 	if (lines == NULL)
-		return (1);
+		printf("Error");
+		//return (1);
 	void *mlx = mlx_init();
 	void *win = mlx_new_window(mlx, 600, 600, "mlx 42");
 	mlx_loop(mlx);

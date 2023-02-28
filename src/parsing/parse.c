@@ -1,5 +1,6 @@
 #include "cub3D.h"
 #include <fcntl.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <list.h>
 
@@ -34,6 +35,15 @@ void	print_error(char *message)
 	write(2, message, ft_strlen(message));
 }
 
+void print_lines(t_list *lines)
+{
+	while (lines != NULL)
+	{
+		printf("%s \n", lines->content);
+		lines = lines->next;
+	}
+}
+
 t_list	*parse(char *filename, t_map *map)
 {
 	t_list	*lines;
@@ -53,10 +63,18 @@ t_list	*parse(char *filename, t_map *map)
 		return (NULL);
 	}
 	map->lines = lines;
+	if (!check_header(&map))
+	{
+		print_error("the textures or f&c are invalid");
+		ft_lstclear(&lines, free);
+		return (NULL);
+	}
+	print_lines(map->header);
+//	print_lines(lines);
 	//if (check_map(map))
 	//	return (lines);
-	//print_error("the map is invalid");
-	ft_lstclear(&lines, free);
+	print_error("the map is invalid");
+	//ft_lstclear(&lines, free);
 	return (NULL);
 }
 
