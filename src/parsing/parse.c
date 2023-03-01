@@ -63,6 +63,7 @@ t_list	*parse(char *filename, t_map *map)
 		return (NULL);
 	}
 	map->lines = lines;
+	split_map(&map);
 	if (!check_header(&map))
 	{
 		print_error("the textures or f&c are invalid");

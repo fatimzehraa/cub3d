@@ -15,52 +15,70 @@ int check_dup(t_map *map)
 	return (0);
 }
 
-int map_began(t_list *lines)
+int map_began(char *content)
 {
-	t_list *curr;
-	curr = lines;
-	while (curr)
-	{
-		while (*curr->content == ' ')
-			curr->content++;
-		if (curr->content[0] == '1')
-			return (1);
-		curr = curr->next;
-	}
-	return (0);
+	int i;
+	i = 0;
+	while (content[i] == ' ')
+		i++;
+	return (content[i] == '1');
 }
 
-int	check_header(t_map *map)
+void split_map(t_map **map)
 {
-	map->header = map->lines;
-	while (map->lines && !map_began(map->lines)){
-		map->lines = map->lines->next;
+	(*map)->header = (*map)->lines;
+	t_list *prev;
+	prev = NULL;
+	while ((*map)->lines && !map_began((*map)->lines->content)){
+		prev = (*map)->lines;
+		(*map)->lines = (*map)->lines->next;
 	}
-	t_list *tmp = map->lines;
-	map->lines = NULL;
-	map->lines = tmp;
+	if (prev)
+		prev->next = NULL;
+}
 
-	while ((*map)->lines && !map_began((*map)->lines))
+int	check_header(t_map **map)
+{
+	while ((*map)->header)
 	{
-		if ((*map)->lines->content[0] == 'N' && (*map)->lines->content[1] == 'O')
-			(*map)->header->content = (*map)->lines->content;
-		else if ((*map)->lines->content[0] == 'S' && (*map)->lines->content[1] == 'O')
-			(*map)->header->content = (*map)->lines->content;
-		else if ((*map)->lines->content[0] == 'W' && (*map)->lines->content[1] == 'E')
-			(*map)->header->content = (*map)->lines->content;
-		else if ((*map)->lines->content[0] == 'E' && (*map)->lines->content[1] == 'A')
-			(*map)->header->content = (*map)->lines->content;
-		else if ((*map)->lines->content[0] == 'S' && (*map)->lines->content[1] == ' ')
-			(*map)->header->content = (*map)->lines->content;
-		else if ((*map)->lines->content[0] == 'F')
-			(*map)->header->content = (*map)->lines->content;
-		else if ((*map)->lines->content[0] == 'C')
-			(*map)->header->content = (*map)->lines->content;
-		else if ((*map)->lines->content[0] == '\0')
-			(*map)->header->content = (*map)->lines->content;
+		if ((*map)->header->content[0] == 'N' && (*map)->header->content[1] == 'O')
+		{
+			if (!parse_north(map, (*map)->north))
+				return (0);
+		}
+		else if ((*map)->header->content[0] == 'S' && (*map)->header->content[1] == 'O')
+		{
+			if (!parse_south(map, (*map)->south))
+				return (0);
+		}
+		else if ((*map)->header->content[0] == 'W' && (*map)->header->content[1] == 'E')
+		{
+			if (!parse_west(map, (*map)->west))
+				return (0);
+		}
+		else if ((*map)->header->content[0] == 'E' && (*map)->header->content[1] == 'A')
+		{
+			if (!parse_east(map, (*map)->east))
+				return (0);
+		}
+		else if ((*map)->header->content[0] == 'F')
+		{
+			if (!parse_color(map, (*map)->header->content, "F"))
+				return (0);
+		}
+		else if ((*map)->header->content[0] == 'C')
+		{
+			if (!parse_color(map, (*map)->header->content, "C"))
+				return (0);
+		}
+		else if ((*map)->header->content[0] == '\0')
+		{
+			(*map)->header = (*map)->header->next;
+			continue ;
+		}
 		else
 			return (0);
-		(*map)->lines = (*map)->lines->next;
+		(*map)->header = (*map)->header->next;
 	}
 	if (check_dup(*map))
 		return (0);
